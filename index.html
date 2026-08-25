@@ -48,19 +48,20 @@
             padding: 10px 0;
         }
 
-        /* Logo 區域設計 (防重疊修正) */
+        /* Logo 區域設計 (加大 Logo 且防重疊) */
         .logo-link {
             display: flex;
             align-items: center;
             text-decoration: none;
-            overflow: hidden;
-            max-width: 35%;
+            overflow: visible;
+            max-width: 45%;
         }
 
         .logo-img {
-            height: 60px;
+            height: 75px;
             width: auto;
             object-fit: contain;
+            margin: -10px -15px -10px -10px;
         }
 
         .nav-links {
@@ -111,20 +112,21 @@
         /* 手機版適應 (螢幕寬度 768px 以下) */
         @media (max-width: 768px) {
             .nav-container {
-                height: 70px;
+                height: 75px;
             }
             .logo-img {
-                height: 45px;
+                height: 62px;
+                margin: -5px -10px -5px -5px;
             }
             .nav-links {
-                gap: 8px;
+                gap: 6px;
             }
             .nav-links a {
-                font-size: 0.82rem;
+                font-size: 0.8rem;
             }
             .btn-cart {
-                padding: 6px 10px;
-                font-size: 0.8rem;
+                padding: 5px 8px;
+                font-size: 0.78rem;
             }
         }
 
