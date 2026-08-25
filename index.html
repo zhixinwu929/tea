@@ -679,6 +679,11 @@
                         </select>
                     </div>
 
+                    <div class="form-group">
+                        <label for="phoneNum">聯絡電話 / 手機號碼：</label>
+                        <input type="tel" id="phoneNum" class="form-input" placeholder="請輸入您的手機或電話號碼 (例: 0912345678)">
+                    </div>
+
                     <!-- 金額總計 -->
                     <div class="cart-total-box">
                         <span>應付金額總計：</span>
@@ -829,10 +834,16 @@
 
         function submitOrder() {
             const storeName = document.getElementById('storeStoreName').value.trim();
+            const phone = document.getElementById('phoneNum').value.trim();
             const submitBtn = document.getElementById('submitBtn');
 
             if (!storeName) {
                 showToast('請填寫取件門市名稱或店號！');
+                return;
+            }
+
+            if (!phone) {
+                showToast('請填寫聯絡電話！');
                 return;
             }
 
@@ -841,7 +852,7 @@
 
             let orderItemsStr = cart.map(item => `${item.title} x${item.qty}`).join('、');
             let grandTotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
-            let storeText = `${shipping} - ${storeName}`;
+            let storeText = `${shipping} - ${storeName} (電話: ${phone})`;
 
             submitBtn.innerText = "訂單傳送中...";
             submitBtn.disabled = true;
@@ -875,6 +886,7 @@
         function showSuccessMsg() {
             cart = [];
             document.getElementById('storeStoreName').value = '';
+            document.getElementById('phoneNum').value = '';
             updateCartBadge();
             closeCartModal();
             const submitBtn = document.getElementById('submitBtn');
