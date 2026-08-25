@@ -3,20 +3,431 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>&nbsp;</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>壺緣莊</title>
+    <style>
+        :root {
+            --primary-color: #3b5038;
+            --accent-color: #c48b4d;
+            --bg-light: #f7f6f2;
+            --bg-card: #ffffff;
+            --danger-color: #d9534f;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #ffffff;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 110px;
+            padding: 10px 0;
+        }
+
+        /* Logo 區域設計 */
+        .logo-link {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            overflow: visible;
+        }
+
+        .logo-img {
+            height: 100px;
+            width: auto;
+            object-fit: contain;
+            transform: scale(2.3);
+            transform-origin: left center;
+            margin-left: 15px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #444;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .btn-cart {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background-color: var(--primary-color);
+            color: #fff;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: background 0.2s;
+        }
+
+        .btn-cart:hover { background-color: #2c3e29; }
+
+        .cart-badge {
+            background-color: var(--accent-color);
+            color: white;
+            font-size: 0.8rem;
+            padding: 2px 7px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        /* Hero */
+        .hero {
+            height: 45vh;
+            background: url('https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&q=80&w=1920') center/cover no-repeat;
+            position: relative;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.25);
+        }
+
+        /* Section Title */
+        .section-title {
+            text-align: center;
+            font-size: 1.6rem;
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+
+        /* Contact Us Section */
+        .contact-section {
+            padding: 60px 0;
+            background-color: #ffffff;
+        }
+
+        .contact-card {
+            max-width: 650px;
+            margin: 0 auto;
+            background: var(--bg-light);
+            border-radius: 12px;
+            padding: 35px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+            border: 1px solid #e0ddd5;
+        }
+
+        .contact-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 1.05rem;
+            color: #333;
+        }
+
+        .contact-icon {
+            font-size: 1.3rem;
+            width: 28px;
+            text-align: center;
+        }
+
+        .contact-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .contact-link:hover {
+            color: var(--accent-color);
+            text-decoration: underline;
+        }
+
+        /* Timeline Section */
+        .timeline-section { padding: 60px 0 80px; }
+
+        .timeline {
+            position: relative;
+            max-width: 700px;
+            margin: 0 auto;
+            padding-left: 30px;
+            border-left: 2px solid var(--primary-color);
+        }
+
+        .timeline-item { position: relative; margin-bottom: 35px; }
+
+        .timeline-dot {
+            position: absolute;
+            left: -39px;
+            top: 5px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background-color: var(--accent-color);
+        }
+
+        .timeline-content {
+            background: var(--bg-card);
+            padding: 20px;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+
+        .timeline-year { font-size: 1.2rem; font-weight: bold; color: var(--primary-color); margin-bottom: 12px; }
+        .tea-list { list-style: none; padding: 0; margin: 0; }
+
+        .tea-card {
+            padding: 10px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+        }
+
+        .tea-card:hover {
+            background-color: #fdfbf7;
+            border-color: var(--accent-color);
+            transform: translateX(4px);
+        }
+
+        .tea-item-border { border-bottom: 1px dashed #eee; margin-bottom: 6px; padding-bottom: 6px; }
+
+        .tea-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .tea-title::after {
+            content: "查看詳情 →";
+            font-size: 0.75rem;
+            color: var(--accent-color);
+            font-weight: normal;
+            opacity: 0.7;
+        }
+
+        .tea-price { color: var(--accent-color); font-weight: bold; }
+
+        /* Modal Overlay */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(3px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active { opacity: 1; pointer-events: auto; }
+
+        .modal-card {
+            background: #fff;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            position: relative;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-card { transform: translateY(0); }
+        .modal-img { width: 100%; height: 240px; object-fit: cover; display: block; background-color: #eee; }
+        .modal-body { padding: 25px; }
+
+        .modal-year {
+            display: inline-block;
+            background: var(--primary-color);
+            color: #fff;
+            font-size: 0.8rem;
+            padding: 3px 10px;
+            border-radius: 20px;
+            margin-bottom: 10px;
+        }
+
+        .modal-title { font-size: 1.3rem; color: #2b2b2b; margin-bottom: 10px; }
+
+        .modal-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+
+        .modal-desc { color: #555; font-size: 0.92rem; line-height: 1.7; margin-bottom: 20px; }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 32px;
+            height: 32px;
+            background: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: none;
+            font-size: 1.2rem;
+            z-index: 10;
+        }
+
+        .btn-add-cart {
+            width: 100%;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .btn-add-cart:disabled {
+            background-color: #999;
+            cursor: not-allowed;
+        }
+
+        /* 購物車內部樣式 */
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-item-title { font-size: 0.9rem; font-weight: bold; width: 45%; }
+        .cart-controls { display: flex; align-items: center; gap: 6px; }
+
+        .btn-qty {
+            width: 24px;
+            height: 24px;
+            border: 1px solid #ccc;
+            background: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .btn-del {
+            color: var(--danger-color);
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 0.85rem;
+            margin-left: 10px;
+        }
+
+        .cart-total-box {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px solid var(--primary-color);
+            font-size: 1.1rem;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .form-group { margin-top: 15px; }
+        .form-group label { display: block; font-size: 0.9rem; font-weight: bold; margin-bottom: 5px; color: #444; }
+
+        .form-select, .form-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            background-color: #fff;
+        }
+
+        .cart-empty { text-align: center; padding: 30px 0; color: #888; }
+
+        footer {
+            background-color: var(--primary-color);
+            padding: 30px 0;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.85rem;
+            line-height: 1.8;
+        }
+
+        footer a {
+            color: #d1e2ce;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
 
     <header class="navbar">
         <div class="container nav-container">
-            <div class="logo-box"></div>
-            <div class="nav-links">
-                <div class="nav-item"></div>
-                <div class="nav-item"></div>
-                <div class="nav-item"></div>
-            </div>
-            <div class="btn-box"></div>
+            <a href="#" class="logo-link">
+                <img src="logo.png" alt="壺緣莊 Logo" class="logo-img">
+            </a>
+            <ul class="nav-links">
+                <li><a href="#contact">聯絡我們</a></li>
+                <li><a href="#timeline">茶品年鑑</a></li>
+            </ul>
+            <button class="btn-cart" onclick="openCartModal()">
+                🛒 購物車 <span class="cart-badge" id="cartCount">0</span>
+            </button>
         </div>
     </header>
 
@@ -24,77 +435,416 @@
         <div class="hero-overlay"></div>
     </section>
 
-    <section class="featured-products">
+    <!-- 聯絡我們區塊 -->
+    <section class="contact-section" id="contact">
         <div class="container">
-            <div class="product-grid">
-                <div class="product-card">
-                    <div class="product-img img-1"></div>
-                    <div class="product-info">
-                        <div class="line title-line"></div>
-                        <div class="line desc-line"></div>
-                        <div class="product-bottom">
-                            <div class="line price-line"></div>
-                            <div class="btn-sm"></div>
+            <h2 class="section-title">聯絡我們</h2>
+            <div class="contact-card">
+                <ul class="contact-list">
+                    <li class="contact-item">
+                        <span class="contact-icon">📞</span>
+                        <div>
+                            <strong>店裡電話：</strong>
+                            <a href="tel:0229435029" class="contact-link">02-29435029</a>
                         </div>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <div class="product-img img-2"></div>
-                    <div class="product-info">
-                        <div class="line title-line"></div>
-                        <div class="line desc-line"></div>
-                        <div class="product-bottom">
-                            <div class="line price-line"></div>
-                            <div class="btn-sm"></div>
+                    </li>
+                    <li class="contact-item">
+                        <span class="contact-icon">📱</span>
+                        <div>
+                            <strong>行動電話：</strong>
+                            <a href="tel:0963877869" class="contact-link">0963877869</a>（劉老闆）
                         </div>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <div class="product-img img-3"></div>
-                    <div class="product-info">
-                        <div class="line title-line"></div>
-                        <div class="line desc-line"></div>
-                        <div class="product-bottom">
-                            <div class="line price-line"></div>
-                            <div class="btn-sm"></div>
+                    </li>
+                    <li class="contact-item">
+                        <span class="contact-icon">📍</span>
+                        <div>
+                            <strong>門市地址：</strong>
+                            <a href="https://maps.google.com/?q=235新北市中和區秀景里成功路23號" target="_blank" class="contact-link">
+                                235 新北市中和區秀景里成功路23號
+                            </a>
                         </div>
-                    </div>
-                </div>
+                    </li>
+                    <li class="contact-item">
+                        <span class="contact-icon">⏰</span>
+                        <div>
+                            <strong>營業時間：</strong>
+                            <span>幾乎每天營業（來店前請先電話確認）</span>
+                        </div>
+                    </li>
+                </ul>
             </div>
         </div>
     </section>
 
-    <section class="timeline-section">
+    <!-- 時間線區塊 (Timeline) -->
+    <section class="timeline-section" id="timeline">
         <div class="container">
+            <h2 class="section-title">年份珍藏時間線</h2>
             <div class="timeline">
+
+                <!-- 1930 之前 -->
                 <div class="timeline-item">
                     <div class="timeline-dot"></div>
                     <div class="timeline-content">
-                        <div class="line title-line"></div>
-                        <div class="line desc-line"></div>
+                        <div class="timeline-year">1930 之前</div>
+                        <div class="tea-card" onclick="openModal('正山陳年普洱茶（陳年生磚）', '1930 之前', '2000 片', 3500, '1.jpg', '此款茶磚歷經百年歲月自然陳化，茶磚結構緊實，沖泡後湯色紅濃明亮，帶有獨特的藥香與老木香氣，入口順滑回甘。')">
+                            <div class="tea-title">正山陳年普洱茶（陳年生磚）</div>
+                        </div>
                     </div>
                 </div>
+
+                <!-- 1930 -->
                 <div class="timeline-item">
                     <div class="timeline-dot"></div>
                     <div class="timeline-content">
-                        <div class="line title-line"></div>
-                        <div class="line desc-line"></div>
+                        <div class="timeline-year">1930</div>
+                        <div class="tea-card" onclick="openModal('易武陳年大頁野生普洱茶(勐海茶廠)老磚（紅標）', '1930 年', '30 片', 5000, '2.jpg', '勐海茶廠早期經典之作，選用易武正山大葉種野生茶菁製作。紅標包裝保存完整，茶湯柔甜微蜜香，韻味悠長。')">
+                            <div class="tea-title">易武陳年大頁野生普洱茶(勐海茶廠)老磚（紅標）</div>
+                        </div>
                     </div>
                 </div>
+
+                <!-- 1940 -->
                 <div class="timeline-item">
                     <div class="timeline-dot"></div>
                     <div class="timeline-content">
-                        <div class="line title-line"></div>
-                        <div class="line desc-line"></div>
+                        <div class="timeline-year">1940</div>
+                        <ul class="tea-list">
+                            <li class="tea-item-border">
+                                <div class="tea-card" onclick="openModal('革登大葉喬木野生茶（生）綠標', '1940 年代', '300 片', 4500, '3.jpg', '古六大茶山之一革登茶區喬木樹種，綠標特殊封印，姿態雄渾，山野氣韻極強。')">
+                                    <div class="tea-title">革登大葉喬木野生茶（生）綠標</div>
+                                </div>
+                            </li>
+                            <li class="tea-item-border">
+                                <div class="tea-card" onclick="openModal('倚邦大葉喬木野生茶（生）咖啡標', '1940 年代', '300 片', 3800, '4.jpg', '倚邦山深處古樹茶採摘，咖啡標特別定製版本，口感細緻溫潤，獨具幽蘭花香。')">
+                                    <div class="tea-title">倚邦大葉喬木野生茶（生）咖啡標</div>
+                                </div>
+                            </li>
+                            <li class="tea-item-border">
+                                <div class="tea-card" onclick="openModal('蠻磚大葉喬木野生茶（生）酒紅標', '1940 年代', '300 片', 5500, '5.jpg', '蠻磚茶區古樹質地厚重，酒紅標代表優良品質等級，湯質稠厚，苦盡甘來。')">
+                                    <div class="tea-title">蠻磚大葉喬木野生茶（生）酒紅標</div>
+                                </div>
+                            </li>
+                            <li class="tea-item-border">
+                                <div class="tea-card" onclick="openModal('倚邦大葉喬木野生茶（生）紅標', '1940 年代', '50 片', 4000, '6.jpg', '珍稀小批量紅標倚邦野生茶，芽頭顯毫，經過半世紀以上陳放，氣感強烈。')">
+                                    <div class="tea-title">倚邦大葉喬木野生茶（生）紅標</div>
+                                </div>
+                            </li>
+                            <li class="tea-item-border">
+                                <div class="tea-card" onclick="openModal('正山大葉喬木野生茶（生）橘標', '1940 年代', '100 片', 4500, '7.jpg', '正山野生喬木老茶，橘標亮眼，果香與陳香交織，生津極快。')">
+                                    <div class="tea-title">正山大葉喬木野生茶（生）橘標</div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="tea-card" onclick="openModal('易武大葉喬木野生茶（生）黑黃標', '1940 年代', '100 片', 5000, '8.jpg', '經典易武黑黃雙色標記，茶湯飽滿圓潤，帶有樟香與老木韵味。')">
+                                    <div class="tea-title">易武大葉喬木野生茶（生）黑黃標</div>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
                 </div>
+
+                <!-- 1950 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">1950</div>
+                        <ul class="tea-list">
+                            <li class="tea-item-border">
+                                <div class="tea-card" onclick="openModal('倚邦陳年大葉野生茶（生）粉標', '1950 年代', '300 片', 5000, '9.jpg', '1950年代粉標特別款，倚邦高山茶料，茶質柔順，帶有特殊梅子甜香。')">
+                                    <div class="tea-title">倚邦陳年大葉野生茶（生）粉標</div>
+                                </div>
+                            </li>
+                            <li class="tea-item-border">
+                                <div class="tea-card" onclick="openModal('莽枝陳年大葉野生普洱茶 紫標', '1950 年代', '300 片', 4000, '10.jpg', '古六大茶山莽枝山原料，紫標尊貴象徵，茶氣沉穩，耐泡度極佳。')">
+                                    <div class="tea-title">莽枝陳年大葉野生普洱茶 紫標</div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="tea-card" onclick="openModal('攸樂野生喬木普洱茶（生）橘標', '1950 年代', '200 片', 3500, '11.jpg', '攸樂山大葉種野生茶，香氣高揚，湯色金黃明亮，喉韻清爽。')">
+                                    <div class="tea-title">攸樂野生喬木普洱茶（生）橘標</div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 1970 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">1970</div>
+                        <div class="tea-card" onclick="openModal('特級蠻磚大葉喬木野生普洱茶（真藏品）紅標', '1970 年代', '20 片', 15000, '12.jpg', '博物館級真藏品！僅存20片。70年代蠻磚特級茶菁，極具典藏與升值潛力，茶湯霸氣濃郁，沉香明顯。')">
+                            <div class="tea-title">特級蠻磚大葉喬木野生普洱茶（真藏品）紅標</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 1980 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">1980</div>
+                        <div class="tea-card" onclick="openModal('1984班章陳年大葉野生普洱茶 （生）黃綠標', '1980 年代 (1984)', '200 片', 3600, '13.jpg', '1984年老班章野生茶，黃綠標版本。班章霸氣顯著，苦甘轉化完美，回甘迅速綿長。')">
+                            <div class="tea-title">1984班章陳年大葉野生普洱茶 （生）黃綠標</div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
+
+    <!-- 茶品詳細 Modal -->
+    <div class="modal-overlay" id="teaModal" onclick="closeModalOnBg(event)">
+        <div class="modal-card">
+            <button class="modal-close" onclick="closeModal()">✕</button>
+            <img id="mImg" class="modal-img" src="" alt="茶品圖片">
+            <div class="modal-body">
+                <span id="mYear" class="modal-year"></span>
+                <h3 id="mTitle" class="modal-title"></h3>
+                <div class="modal-meta">
+                    <span>庫存數量：<strong id="mCount"></strong></span>
+                    <span class="tea-price" id="mPriceText"></span>
+                </div>
+                <p id="mDesc" class="modal-desc"></p>
+                <button class="btn-add-cart" onclick="addCurrentModalToCart()">＋ 加入購物車</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 購物車 Modal -->
+    <div class="modal-overlay" id="cartModal" onclick="closeCartOnBg(event)">
+        <div class="modal-card">
+            <button class="modal-close" onclick="closeCartModal()">✕</button>
+            <div class="modal-body">
+                <h3 class="modal-title" style="margin-top: 10px;">🛒 壺緣莊 - 購物車結帳</h3>
+                
+                <!-- 購物車清單列表 -->
+                <div id="cartListContainer"></div>
+
+                <!-- 寄送與付款選項 -->
+                <div id="checkoutFields" style="display: none;">
+                    <div class="form-group">
+                        <label for="shippingMethod">寄送方式（取貨超商）：</label>
+                        <select id="shippingMethod" class="form-select">
+                            <option value="全家超商取貨">全家超商取貨</option>
+                            <option value="7-ELEVEN超商取貨">7-ELEVEN 超商取貨</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="storeStoreName">指定超商門市名稱/店號：</label>
+                        <input type="text" id="storeStoreName" class="form-input" placeholder="請輸入取件門市名稱或店號 (例: 中和成功店)">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="paymentMethod">付款方式：</label>
+                        <select id="paymentMethod" class="form-select">
+                            <option value="銀行匯款 / 轉帳">銀行匯款 / 轉帳</option>
+                            <option value="現場現金支付">現場現金支付</option>
+                        </select>
+                    </div>
+
+                    <!-- 金額總計 -->
+                    <div class="cart-total-box">
+                        <span>應付金額總計：</span>
+                        <span style="color: var(--accent-color);" id="cartGrandTotal">NT$ 0</span>
+                    </div>
+
+                    <button class="btn-add-cart" id="submitBtn" style="margin-top: 20px;" onclick="submitOrder()">確認送出訂單</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
 
     <footer>
+        <div class="container">
+            <p><strong>壺緣莊</strong> | 電話：<a href="tel:0229435029">02-29435029</a> / <a href="tel:0963877869">0963877869</a>（劉老闆）</p>
+            <p>地址：235 新北市中和區秀景里成功路23號</p>
+            <p>© 壺緣莊 版權所有</p>
+        </div>
+    </footer>
+
+    <!-- 隱藏的跨域提交 Form -->
+    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted) { showSuccessMsg(); }"></iframe>
+
+    <script>
+        let cart = [];
+        let currentActiveTea = null;
+        let submitted = false;
+
+        function openModal(title, year, count, price, imgSrc, desc) {
+            currentActiveTea = { title, price };
+            document.getElementById('mTitle').innerText = title;
+            document.getElementById('mYear').innerText = year;
+            document.getElementById('mCount').innerText = count;
+            document.getElementById('mPriceText').innerText = `NT$ ${price.toLocaleString()} / 片`;
+            document.getElementById('mImg').src = imgSrc;
+            document.getElementById('mDesc').innerText = desc;
+            
+            document.getElementById('teaModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('teaModal').classList.remove('active');
+        }
+
+        function closeModalOnBg(e) {
+            if (e.target.id === 'teaModal') closeModal();
+        }
+
+        function directAddToCart(title, price) {
+            let existing = cart.find(item => item.title === title);
+            if (existing) {
+                existing.qty++;
+            } else {
+                cart.push({ title, price, qty: 1 });
+            }
+            updateCartBadge();
+            alert(`已將「${title}」加入購物車！`);
+        }
+
+        function addCurrentModalToCart() {
+            if (currentActiveTea) {
+                directAddToCart(currentActiveTea.title, currentActiveTea.price);
+                closeModal();
+            }
+        }
+
+        function renderCart() {
+            const container = document.getElementById('cartListContainer');
+            const checkoutFields = document.getElementById('checkoutFields');
+
+            if (cart.length === 0) {
+                container.innerHTML = `<div class="cart-empty">購物車目前是空的喔！</div>`;
+                checkoutFields.style.display = "none";
+                return;
+            }
+
+            checkoutFields.style.display = "block";
+            let html = "";
+            let subtotal = 0;
+
+            cart.forEach((item, index) => {
+                let itemTotal = item.price * item.qty;
+                subtotal += itemTotal;
+                html += `
+                    <div class="cart-item">
+                        <div class="cart-item-title">${item.title}</div>
+                        <div style="font-size: 0.85rem; color: #666;">NT$ ${item.price.toLocaleString()}</div>
+                        <div class="cart-controls">
+                            <button class="btn-qty" onclick="changeQty(${index}, -1)">-</button>
+                            <span>${item.qty}</span>
+                            <button class="btn-qty" onclick="changeQty(${index}, 1)">+</button>
+                            <button class="btn-del" onclick="removeItem(${index})">刪除</button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+            document.getElementById('cartGrandTotal').innerText = `NT$ ${subtotal.toLocaleString()}`;
+        }
+
+        function changeQty(index, delta) {
+            cart[index].qty += delta;
+            if (cart[index].qty <= 0) {
+                cart.splice(index, 1);
+            }
+            updateCartBadge();
+            renderCart();
+        }
+
+        function removeItem(index) {
+            cart.splice(index, 1);
+            updateCartBadge();
+            renderCart();
+        }
+
+        function updateCartBadge() {
+            let totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+            document.getElementById('cartCount').innerText = totalQty;
+        }
+
+        function openCartModal() {
+            renderCart();
+            document.getElementById('cartModal').classList.add('active');
+        }
+
+        function closeCartModal() {
+            document.getElementById('cartModal').classList.remove('active');
+        }
+
+        function closeCartOnBg(e) {
+            if (e.target.id === 'cartModal') closeCartModal();
+        }
+
+        // 送出訂單至 Google 表單
+        function submitOrder() {
+            const shipping = document.getElementById('shippingMethod').value;
+            const storeName = document.getElementById('storeStoreName').value.trim();
+            const payment = document.getElementById('paymentMethod').value;
+            const submitBtn = document.getElementById('submitBtn');
+
+            if (!storeName) {
+                alert('請填寫取件門市名稱或店號！');
+                return;
+            }
+
+            let orderItemsStr = cart.map(item => `${item.title} x${item.qty}`).join('、');
+            let grandTotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            let storeText = `${shipping} - ${storeName}`;
+
+            submitBtn.innerText = "訂單傳送中...";
+            submitBtn.disabled = true;
+
+            // 動態建立傳統 Form 送出，繞過瀏覽器跨域阻擋
+            let form = document.createElement('form');
+            form.action = "https://docs.google.com/forms/d/e/1FAIpQLSfHCEXi8Yo4FSPZf4Q1BIpBWFtsfHvxIob0BqNeUdUmTzqHyA/formResponse";
+            form.method = "POST";
+            form.target = "hidden_iframe";
+
+            let fields = {
+                'entry.203710451': orderItemsStr,
+                'entry.142722029': `NT$ ${grandTotal.toLocaleString()}`,
+                'entry.272094560': storeText,
+                'entry.1246152236': payment
+            };
+
+            for (let key in fields) {
+                let input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = key;
+                input.value = fields[key];
+                form.appendChild(input);
+            }
+
+            document.body.appendChild(form);
+            submitted = true;
+            form.submit();
+            document.body.removeChild(form);
+        }
+
+        function showSuccessMsg() {
+            const shipping = document.getElementById('shippingMethod').value;
+            const storeName = document.getElementById('storeStoreName').value.trim();
+            const payment = document.getElementById('paymentMethod').value;
+            const submitBtn = document.getElementById('submitBtn');
+
+            alert(`感謝您的訂購！訂單已成功送出！\n\n取件資訊：${shipping} - ${storeName}\n付款方式：${payment}\n\n壺緣莊將盡快為您處理！`);
+            cart = [];
+            document.getElementById('storeStoreName').value = '';
+            updateCartBadge();
+            closeCartModal();
+            submitBtn.innerText = "確認送出訂單";
+            submitBtn.disabled = false;
+            submitted = false;
+        }
+    </script>
+</body>
+</html>
         <div class="footer-box"></div>
     </footer>
 
